@@ -1,0 +1,19 @@
+name: Semantic Release
+on:
+    push:
+
+jobs:
+    build:
+        # Job name is Greeting
+        name: Build & Release
+        # This job runs on Linux
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@master
+
+            - run: yarn install
+            - run: yarn run build
+            - run: yarn run semantic-release
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                  NPM_TOKEN: ${{ secrets.NPM_TOKEN }}

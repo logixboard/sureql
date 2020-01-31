@@ -1,6 +1,6 @@
 import { QueryConfig as PgQuery } from 'pg';
 
-const namedQuery = `$$YESQL$$NAMEDQUERY$$YESQL$$`;
+const namedQuery = `$$SUREQL$$NAMEDQUERY$$SUREQL$$`;
 
 /**
  * @param data params to func

@@ -2,7 +2,7 @@ import fs from 'fs';
 import path from 'path';
 
 export const fileTemplate: string = fs.readFileSync(
-    path.resolve(__dirname, 'resources', 'sureql-fillin.ts'),
+    path.resolve(__dirname, 'resources', 'template.ts'),
     'utf8'
 );
 
