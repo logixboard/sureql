@@ -3,6 +3,10 @@ Create JavaScript wrappers for PostgreSQL statements with named parameters
 
 > sureql is a fork of [yesql](https://github.com/pihvi/yesql) by [@pihvi](https://github.com/pihvi)
 
+# TODO
+
+- readd tests from upstream
+
 # Legal
 
 sureql is released under the ISC License, [the same terms as

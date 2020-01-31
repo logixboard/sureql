@@ -1,0 +1,26 @@
+{
+    "compilerOptions": {
+        "preserveConstEnums": true,
+        "strictNullChecks": true,
+        "sourceMap": true,
+        "lib": ["es2015"],
+        "module": "CommonJS",
+        "esModuleInterop": true,
+        "target": "ES6",
+        "noImplicitAny": true,
+        "moduleResolution": "Node",
+        "resolveJsonModule": true,
+        "alwaysStrict": true,
+        "declaration": true,
+        "allowJs": true,
+        "rootDir": "./src",
+        "outDir": "./dist",
+        "baseUrl": "."
+    },
+    "include": [
+        "./src"
+    ],
+    "exclude": [
+        "./src/resources"
+    ]
+}
