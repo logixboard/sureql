@@ -4,19 +4,30 @@
     "description": "Create JavaScript wrappers for PostgreSQL statements with named parameters",
     "main": "dist/yesql.js",
     "types": "dist/yesql.d.ts",
+    "files": [
+        "dist"
+    ],
     "repository": "https://github.com/logixboard/sureql",
     "author": "Logixboard, Inc.",
     "license": "ISC",
     "private": false,
+    "scripts": {
+        "prepublish": "yarn run build",
+        "lint": "yarn run eslint src/*.ts",
+        "lint:fix": "yarn run eslint --fix src/*.ts",
+        "build": "yarn run rimraf dist && yarn run lint && yarn run tsc && yarn run copyfiles -au1 src/resources/**/* dist/"
+    },
     "devDependencies": {
         "@types/mocha": "^7.0.1",
         "@typescript-eslint/eslint-plugin": "^2.18.0",
         "@typescript-eslint/parser": "^2.18.0",
+        "copyfiles": "^2.2.0",
         "eslint": "^6.8.0",
         "eslint-config-prettier": "^6.10.0",
         "eslint-plugin-jsdoc": "^21.0.0",
         "eslint-plugin-prettier": "^3.1.2",
         "mocha": "^7.0.1",
+        "rimraf": "^3.0.1",
         "semantic-release": "^17.0.2",
         "ts-node": "^8.6.2",
         "typescript": "^3.7.5"
