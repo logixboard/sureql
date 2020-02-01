@@ -1,7 +1,13 @@
 # sureql
 Create JavaScript wrappers for PostgreSQL statements with named parameters
 
-> sureql is a fork of [yesql](https://github.com/pihvi/yesql) by [@pihvi](https://github.com/pihvi)
+> sureql is a fork of [yesql](https://github.com/pihvi/yesql) by [@pihvi](https://github.com/pihvi),
+> though the workflow has been dramatically changed (and is for now somewhat undocumented...)
+
+# TODO
+
+- document the differences from upstream and the new CLI-based workflow
+- re-add tests from upstream?
 
 # Legal
 
