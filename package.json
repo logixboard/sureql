@@ -8,7 +8,7 @@
         "dist"
     ],
     "bin": {
-        "sureql": "dist/sureql-bin.js"
+        "sureql": "dist/sureql.sh"
     },
     "release": {
         "prepare": [
@@ -24,7 +24,7 @@
         "prepublish": "yarn run build",
         "lint": "yarn run eslint src/*.ts",
         "lint:fix": "yarn run eslint --fix src/*.ts",
-        "build": "yarn run rimraf dist && yarn run lint && yarn run tsc && yarn run copyfiles -au1 src/resources/**/* dist/"
+        "build": "yarn run rimraf dist && yarn run lint && yarn run tsc && yarn run copyfiles -au1 src/sureql.sh src/resources/**/* dist/"
     },
     "devDependencies": {
         "@semantic-release/git": "^9.0.0",
