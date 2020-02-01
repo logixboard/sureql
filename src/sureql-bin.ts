@@ -9,18 +9,18 @@ const parser = new ArgumentParser({
     prog: 'sureql',
 });
 
-parser.addArgument('sql_dirs', {
+parser.addArgument('sql-dirs', {
     nargs: '*',
     help: 'directories to scan for SQL files',
 });
-parser.addArgument('out_dir', {
+parser.addArgument('out-dir', {
     nargs: 1,
     help: 'output directory for generated Typescript files',
 });
 
 const args = parser.parseArgs();
-const sqlDirs = args.sql_dirs.map((dir: string) => path.resolve(dir));
-const outDir = path.resolve(args.out_dir[0]);
+const sqlDirs = args['sql-dirs'].map((dir: string) => path.resolve(dir));
+const outDir = path.resolve(args['out-dir'][0]);
 
 for (const dir of sqlDirs) {
     const queries = sureql(dir);

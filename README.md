@@ -7,7 +7,7 @@ Create JavaScript wrappers for PostgreSQL statements with named parameters
 # TODO
 
 - document the differences from upstream and the new CLI-based workflow
-- readd tests from upstream
+- re-add tests from upstream?
 
 # Legal
 

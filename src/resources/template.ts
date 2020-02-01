@@ -13,8 +13,6 @@ export default function generateQuery(
     const text = namedQuery.replace(
         /(?<prefix>::?)(?<quote>['"]?)(?<key>[a-zA-Z0-9_]+)\k<quote>/g,
         (_, prefix, _quote, key) => {
-            // don't change casts: '::'
-            // if (prefix !== ':') {
             if (isPgCast(data, _, prefix, _quote, key)) {
                 return prefix + key;
             } else if (haveValueForPlaceholder(data, _, prefix, _quote, key)) {
