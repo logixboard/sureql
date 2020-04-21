@@ -33,6 +33,10 @@ export const indexTemplate = fs.readFileSync(
     path.resolve(__dirname, 'resources', 'index.ts.mustache'),
     'utf8'
 );
+export const commonTemplate = fs.readFileSync(
+    path.resolve(__dirname, 'resources', 'common.ts.mustache'),
+    'utf8'
+);
 const queryWithinFileDelimiter = '\n\n';
 
 export function main(): void {
@@ -67,6 +71,11 @@ export function main(): void {
         }
     }
 
+    fs.writeFileSync(
+        path.join(outDir, 'common.ts'),
+        mustache.render(commonTemplate, {
+        })
+    );
     fs.writeFileSync(
         path.join(outDir, 'index.ts'),
         mustache.render(indexTemplate, {
