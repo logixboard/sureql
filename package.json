@@ -1,14 +1,15 @@
 {
     "name": "sureql",
     "version": "1.0.1",
-    "description": "Create JavaScript wrappers for PostgreSQL statements with named parameters",
-    "main": "dist/yesql.js",
-    "types": "dist/yesql.d.ts",
+    "description": "Create TypeScript wrappers for PostgreSQL statements with named parameters",
+    "main": "dist/src/sureql.js",
+    "types": "dist/src/sureql.d.ts",
     "files": [
-        "dist"
+        "dist",
+        "bin"
     ],
     "bin": {
-        "sureql": "dist/sureql.sh"
+        "sureql": "bin/sureql"
     },
     "release": {
         "prepare": [
@@ -24,13 +25,17 @@
         "prepublish": "yarn run build",
         "lint": "yarn run eslint src/*.ts",
         "lint:fix": "yarn run eslint --fix src/*.ts",
-        "build": "yarn run rimraf dist && yarn run lint && yarn run tsc && yarn run copyfiles -au1 src/sureql.sh src/resources/**/* dist/"
+        "build": "yarn run rimraf dist && yarn run lint && yarn run tsc && yarn run copyfiles -au1 src/resources/**/* dist/src/ && yarn run copyfiles -au1 test/queries/**/* test/specs/**/* dist/test/",
+        "test": "yarn run build && yarn jest"
     },
     "devDependencies": {
+        "@babel/preset-typescript": "^7.9.0",
         "@semantic-release/git": "^9.0.0",
         "@semantic-release/npm": "^7.0.2",
         "@types/argparse": "^1.0.38",
-        "@types/mocha": "^7.0.1",
+        "@types/jest": "^25.2.1",
+        "@types/mustache": "^4.0.1",
+        "@types/pg": "^7.14.3",
         "@typescript-eslint/eslint-plugin": "^2.18.0",
         "@typescript-eslint/parser": "^2.18.0",
         "copyfiles": "^2.2.0",
@@ -38,14 +43,16 @@
         "eslint-config-prettier": "^6.10.0",
         "eslint-plugin-jsdoc": "^21.0.0",
         "eslint-plugin-prettier": "^3.1.2",
-        "mocha": "^7.0.1",
+        "jest": "^25.4.0",
         "rimraf": "^3.0.1",
         "semantic-release": "^17.0.2",
+        "ts-jest": "^25.4.0",
         "ts-node": "^8.6.2",
-        "typescript": "^3.7.5"
+        "typescript": "^3.8.3"
     },
     "dependencies": {
         "argparse": "^1.0.10",
+        "mustache": "^4.0.1",
         "pg": "^7.18.1"
     }
 }
