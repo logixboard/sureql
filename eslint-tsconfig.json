@@ -13,15 +13,17 @@
         "alwaysStrict": true,
         "declaration": true,
         "allowJs": true,
-        "rootDir": "./src",
+        "rootDir": ".",
         "outDir": "./dist",
         "baseUrl": "."
     },
     "include": [
-        "./src"
+        "./src",
+        "./test"
     ],
     "exclude": [
         "./src/resources",
-        "./dist"
+        "./dist",
+        "./test/specs"
     ]
 }

@@ -1,27 +1,3 @@
-# sureql
-
-Create TypeScript wrappers for PostgreSQL statements with named parameters.
-
-## Examples
-
-The CLI (exposed through the usual `npx sureql` / `yarn run sureql` workflows) expects 1+
-directories of `.sql` files [following the same rules and syntax as
-yesql](https://github.com/pihvi/yesql/blob/8327f3faa0458f547ab22d3db7b62e208355b645/README.md) and a
-TypeScript output directory as arguments, and will compile, for example, this:
-
-```sql
--- selectUsingTwoDisparateKeys
-SELECT mt.blah_id
-FROM   public.mytable mt
-WHERE  mt.customer_id = :'customerId'
-AND    mt.date_of_purchase < :'dateOfPurchase'
-;
-```
-
-... into this, a TypeScript wrapper function which takes named parameters validated at compile
-time!:
-
-```typescript
 import { QueryConfig as PgQuery } from 'pg';
 
 export const argumentPattern = /(?<prefix>::?)(?<quote>['"]?)(?<key>[a-zA-Z0-9_]+)\k<quote>/g;
@@ -35,7 +11,7 @@ AND    mt.date_of_purchase < :'dateOfPurchase'
 
 export class MissingValueError extends Error {
     key: string;
-    query: string;
+    query: string | null | undefined;
 
     error = 'MissingValueError';
 
@@ -58,14 +34,14 @@ export default function generateQuery(
     const values: any[] = [];
     const text = rawQuery.replace(
         argumentPattern,
-        (_, prefix, _quote, key) => {
+        (_, prefix: string, _quote: string, key: string) => {
             if (prefix === '::') {
                 return prefix + key;
-            } else if (Object.keys(parameters).includes(key)) {
+            } else if (key in parameters) {
                 // for each named value in the query, replace with a
                 // positional placeholder and accumulate the value in
                 // the values list
-                values.push(parameters[key]);
+                values.push(parameters[key as keyof InputParameters]);
                 return `$${values.length}`;
             }
 
@@ -74,10 +50,3 @@ export default function generateQuery(
     );
     return { text, values };
 }
-```
-
-## Legal
-
-sureql is released under the ISC License, [the same terms as yesql, which it was originally forked
-from](https://github.com/pihvi/yesql/blob/8327f3faa0458f547ab22d3db7b62e208355b645/package.json#L29).
-See `LICENSE.md` for the full text.
