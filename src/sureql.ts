@@ -131,7 +131,8 @@ export function compileQueryFromString(query: string): Readonly<Record<string, s
         [sqlName]: mustache.render(fileTemplate, {
             argumentPattern: argumentPattern.toString(),
             parameters: Array.from(new Set(matchGroups.map(group => group.key))),
-            rawQuery: query
+            rawQuery: query,
+            queryName: sqlName
         })
     };
 }

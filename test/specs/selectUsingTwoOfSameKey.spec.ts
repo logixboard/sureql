@@ -39,5 +39,9 @@ export default function generateQuery(
             throw new MissingValueError(key, rawQuery);
         }
     );
-    return { text, values };
+    return {
+        text,
+        values,
+        name: 'selectUsingTwoOfSameKey'
+    };
 }
