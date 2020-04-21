@@ -29,6 +29,10 @@ export const fileTemplate = fs.readFileSync(
     path.resolve(__dirname, 'resources', 'template.ts.mustache'),
     'utf8'
 );
+export const indexTemplate = fs.readFileSync(
+    path.resolve(__dirname, 'resources', 'index.ts.mustache'),
+    'utf8'
+);
 const queryWithinFileDelimiter = '\n\n';
 
 export function main(): void {
@@ -51,14 +55,24 @@ export function main(): void {
     const sqlDirs = args['sql-dirs'].map((dir: string) => path.resolve(dir));
     const outDir = path.resolve(args['out-dir'][0]);
 
+    const allKeys: Set<string> = new Set();
+
     for (const dir of sqlDirs) {
         const queries = compileDirectory(dir);
 
         for (const [key, query] of Object.entries(queries)) {
             const outPath = path.join(outDir, `${key}.ts`);
             fs.writeFileSync(outPath, query);
+            allKeys.add(key);
         }
     }
+
+    fs.writeFileSync(
+        path.join(outDir, 'index.ts'),
+        mustache.render(indexTemplate, {
+            files: Array.from(allKeys)
+        })
+    );
 }
 
 export function compileDirectory(

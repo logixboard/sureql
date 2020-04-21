@@ -1,0 +1,9 @@
+{{#files}}
+import {{ . }} from './{{ . }}';
+{{/files}}
+
+export {
+{{#files}}
+    {{ . }},
+{{/files}}
+}
