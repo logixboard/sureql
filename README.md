@@ -10,6 +10,7 @@ yesql](https://github.com/pihvi/yesql/blob/8327f3faa0458f547ab22d3db7b62e208355b
 TypeScript output directory as arguments, and will compile, for example, this:
 
 ```sql
+
 -- selectUsingTwoDisparateKeys
 SELECT mt.blah_id
 FROM   public.mytable mt
@@ -24,6 +25,8 @@ time!:
 ```typescript
 import { QueryConfig as PgQuery } from 'pg';
 
+import { MissingValueError } from './common';
+
 export const argumentPattern = /(?<prefix>::?)(?<quote>['"]?)(?<key>[a-zA-Z0-9_]+)\k<quote>/g;
 export const rawQuery = `-- selectUsingTwoDisparateKeys
 SELECT mt.blah_id
@@ -32,20 +35,6 @@ WHERE  mt.customer_id = :'customerId'
 AND    mt.date_of_purchase < :'dateOfPurchase'
 ;
 `;
-
-export class MissingValueError extends Error {
-    key: string;
-    query: string;
-
-    error = 'MissingValueError';
-
-    constructor(key: string, query?: string) {
-        super(`Missing value for key \`${key}\``);
-
-        this.key = key;
-        this.query = query;
-    }
-}
 
 export interface InputParameters {
     customerId: any;
@@ -58,21 +47,25 @@ export default function generateQuery(
     const values: any[] = [];
     const text = rawQuery.replace(
         argumentPattern,
-        (_, prefix, _quote, key) => {
+        (_, prefix: string, _quote: string, key: string) => {
             if (prefix === '::') {
                 return prefix + key;
-            } else if (Object.keys(parameters).includes(key)) {
+            } else if (key in parameters) {
                 // for each named value in the query, replace with a
                 // positional placeholder and accumulate the value in
                 // the values list
-                values.push(parameters[key]);
+                values.push(parameters[key as keyof InputParameters]);
                 return `$${values.length}`;
             }
 
             throw new MissingValueError(key, rawQuery);
         }
     );
-    return { text, values };
+    return {
+        text,
+        values,
+        name: 'selectUsingTwoDisparateKeys'
+    };
 }
 ```
 

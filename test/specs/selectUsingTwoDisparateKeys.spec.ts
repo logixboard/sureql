@@ -1,5 +1,7 @@
 import { QueryConfig as PgQuery } from 'pg';
 
+import { MissingValueError } from './common';
+
 export const argumentPattern = /(?<prefix>::?)(?<quote>['"]?)(?<key>[a-zA-Z0-9_]+)\k<quote>/g;
 export const rawQuery = `-- selectUsingTwoDisparateKeys
 SELECT mt.blah_id
@@ -8,20 +10,6 @@ WHERE  mt.customer_id = :'customerId'
 AND    mt.date_of_purchase < :'dateOfPurchase'
 ;
 `;
-
-export class MissingValueError extends Error {
-    key: string;
-    query: string | null | undefined;
-
-    error = 'MissingValueError';
-
-    constructor(key: string, query?: string) {
-        super(`Missing value for key \`${key}\``);
-
-        this.key = key;
-        this.query = query;
-    }
-}
 
 export interface InputParameters {
     customerId: any;
@@ -48,5 +36,9 @@ export default function generateQuery(
             throw new MissingValueError(key, rawQuery);
         }
     );
-    return { text, values };
+    return {
+        text,
+        values,
+        name: 'selectUsingTwoDisparateKeys'
+    };
 }
