@@ -15,9 +15,11 @@ ORDER BY blah_id
 ;
 `;
 
+// eslint-disable @typescript-eslint/no-empty-interface
 export interface InputParameters {
     customerId: any;
 }
+// eslint-enable @typescript-eslint/no-empty-interface
 
 export default function generateQuery(
     parameters: Readonly<InputParameters>

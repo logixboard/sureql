@@ -5,11 +5,13 @@ import { MissingValueError } from './common';
 export const argumentPattern = {{{ argumentPattern }}};
 export const rawQuery = `{{{ rawQuery }}}`;
 
+// eslint-disable @typescript-eslint/no-empty-interface
 export interface InputParameters {
 {{#parameters}}
     {{ . }}: any;
 {{/parameters}}
 }
+// eslint-enable @typescript-eslint/no-empty-interface
 
 export default function generateQuery(
     parameters: Readonly<InputParameters>
