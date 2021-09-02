@@ -69,6 +69,12 @@ export default function generateQuery(
 }
 ```
 
+## Releasing sureql
+
+Versioning and tagging is all managed with [Semantic
+Release](https://github.com/semantic-release/semantic-release), so assuming commit messages follow
+the expected format, this is fairly hands-off.
+
 ## Legal
 
 sureql is released under the ISC License, [the same terms as yesql, which it was originally forked
