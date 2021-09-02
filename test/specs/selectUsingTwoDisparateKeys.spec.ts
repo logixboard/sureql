@@ -11,12 +11,11 @@ AND    mt.date_of_purchase < :'dateOfPurchase'
 ;
 `;
 
-// eslint-disable @typescript-eslint/no-empty-interface
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface InputParameters {
     customerId: any;
     dateOfPurchase: any;
 }
-// eslint-enable @typescript-eslint/no-empty-interface
 
 export default function generateQuery(
     parameters: Readonly<InputParameters>
