@@ -1,6 +1,6 @@
 {
     "name": "sureql",
-    "version": "1.2.2",
+    "version": "1.2.3",
     "description": "Create TypeScript wrappers for PostgreSQL statements with named parameters",
     "main": "dist/src/sureql.js",
     "types": "dist/src/sureql.d.ts",
