@@ -23,9 +23,9 @@ AND    mt.date_of_purchase < :'dateOfPurchase'
 time!:
 
 ```typescript
-import { QueryConfig as PgQuery } from 'pg';
+import { QueryConfig as PgQuery } from "pg";
 
-import { MissingValueError } from './common';
+import { MissingValueError } from "./common";
 
 export const argumentPattern = /(?<prefix>::?)(?<quote>['"]?)(?<key>[a-zA-Z0-9_]+)\k<quote>/g;
 export const rawQuery = `-- selectUsingTwoDisparateKeys
@@ -37,42 +37,39 @@ AND    mt.date_of_purchase < :'dateOfPurchase'
 `;
 
 export interface InputParameters {
-    customerId: any;
-    dateOfPurchase: any;
+  customerId: any;
+  dateOfPurchase: any;
 }
 
-export default function generateQuery(
-    parameters: Readonly<InputParameters>
-): PgQuery {
-    const values: any[] = [];
-    const text = rawQuery.replace(
-        argumentPattern,
-        (_, prefix: string, _quote: string, key: string) => {
-            if (prefix === '::') {
-                return prefix + key;
-            } else if (key in parameters) {
-                // for each named value in the query, replace with a
-                // positional placeholder and accumulate the value in
-                // the values list
-                values.push(parameters[key as keyof InputParameters]);
-                return `$${values.length}`;
-            }
+export default function generateQuery(parameters: Readonly<InputParameters>): PgQuery {
+  const values: any[] = [];
+  const text = rawQuery.replace(
+    argumentPattern,
+    (_, prefix: string, _quote: string, key: string) => {
+      if (prefix === "::") {
+        return prefix + key;
+      } else if (key in parameters) {
+        // for each named value in the query, replace with a
+        // positional placeholder and accumulate the value in
+        // the values list
+        values.push(parameters[key as keyof InputParameters]);
+        return `$${values.length}`;
+      }
 
-            throw new MissingValueError(key, rawQuery);
-        }
-    );
-    return {
-        text,
-        values,
-        name: 'selectUsingTwoDisparateKeys'
-    };
+      throw new MissingValueError(key, rawQuery);
+    }
+  );
+  return {
+    text,
+    values,
+    name: "selectUsingTwoDisparateKeys",
+  };
 }
 ```
 
 ## Releasing sureql
 
-Versioning and tagging is all managed with [Semantic
-Release](https://github.com/semantic-release/semantic-release), so assuming commit messages follow
+Versioning and tagging is all managed with [Semantic Release](https://github.com/semantic-release/semantic-release), so assuming commit messages follow
 the expected format, this is fairly hands-off.
 
 ## Legal
